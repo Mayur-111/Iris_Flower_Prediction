@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Flower Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Iris Flower Prediction</h1>
+    <form id="irisForm" action="/get_user_data" method="post">
+        <label for="sepal_length">Sepal Length:</label>
+        <input type="text" id="sepal_length" name="sepal_length" placeholder="Enter sepal length">
+        <label for="sepal_width">Sepal Width:</label>
+        <input type="text" id="sepal_width" name="sepal_width" placeholder="Enter sepal width">
+        <label for="petal_length">Petal Length:</label>
+        <input type="text" id="petal_length" name="petal_length" placeholder="Enter petal length">
+        <label for="petal_width">Petal Width:</label>
+        <input type="text" id="petal_width" name="petal_width" placeholder="Enter petal width">
+        <input type="submit" value="Predict">
+    </form>
+    <div id="predictionResult" class="result" style="display: none; text-align: center;"></div>
+
+    <script>
+        document.getElementById("irisForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var form = event.target;
+            var formData = new FormData(form);
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
+                document.getElementById("predictionResult").innerText = result;
+                document.getElementById("predictionResult").style.display = "block";
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
